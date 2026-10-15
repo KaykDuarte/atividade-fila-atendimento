@@ -1,4 +1,4 @@
-export default function ChamadoCard({ chamado, onToggle }) {
+export default function ChamadoCard({ chamado, onToggle, onDelete }) {
   const badgeClass = chamado.resolved ? "badge-done" : "badge-open";
   const badgeText = chamado.resolved ? "Resolvido" : "Aberto";
 
@@ -12,6 +12,13 @@ export default function ChamadoCard({ chamado, onToggle }) {
       <div className="ticket-actions">
         <button type="button" onClick={() => onToggle(chamado.id)}>
           {chamado.resolved ? "Reabrir" : "Resolver"}
+        </button>
+        <button
+          type="button"
+          className="secondary"
+          onClick={() => onDelete(chamado.id)}
+        >
+          Excluir
         </button>
       </div>
     </article>

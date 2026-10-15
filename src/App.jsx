@@ -1,21 +1,30 @@
+import { useState } from "react";
 import "./App.css";
 import ChamadoList from "./components/ChamadoList";
 import Panel from "./components/Panel";
-
-import { initialTickets} from "./data/chamados";
-
-
-// PONTO DE PARTIDA: os três cartões abaixo estão escritos manualmente.
-// O arquivo src/data/chamados.js contém quatro chamados.
-// Os componentes, ações, formulário e persistência ainda não existem.
+import { initialTickets } from "./data/chamados";
 
 export default function App() {
-  const resolvedCount = initialTickets.filter(
+  const [chamados, setChamados] = useState(initialTickets);
+
+  const resolvedCount = chamados.filter(
     (chamado) => chamado.resolved,
   ).length;
 
   function handleToggleChamado(chamadoId) {
-    alert(`Você clicou no chamado: ${chamadoId}`);
+    setChamados((chamadosAtuais) =>
+      chamadosAtuais.map((chamado) =>
+        chamado.id === chamadoId
+          ? { ...chamado, resolved: !chamado.resolved }
+          : chamado,
+      ),
+    );
+  }
+
+  function handleDeleteChamado(chamadoId) {
+    setChamados((chamadosAtuais) =>
+      chamadosAtuais.filter((chamado) => chamado.id !== chamadoId),
+    );
   }
 
   return (
@@ -28,14 +37,15 @@ export default function App() {
 
       <Panel title="Resumo">
         <p className="summary">
-          {resolvedCount} de {initialTickets.length} chamados resolvidos
+          {resolvedCount} de {chamados.length} chamados resolvidos
         </p>
       </Panel>
 
       <Panel title="Chamados">
         <ChamadoList
-          chamados={initialTickets}
+          chamados={chamados}
           onToggle={handleToggleChamado}
+          onDelete={handleDeleteChamado}
         />
       </Panel>
     </main>
