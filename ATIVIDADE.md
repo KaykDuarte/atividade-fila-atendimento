@@ -96,9 +96,7 @@ Entregue **somente o link do seu repositório GitHub**. Não envie ZIP,
 capturas de tela nem relatórios. Trabalho parcial também deve ser entregue.
 
 Consulta liberada: apostila, [mapa das aulas](https://github.com/virgiliojr94/iteam-react-modulo-04)
-e documentação oficial do React. Assistentes de IA podem ser usados para
-explicar conceitos e ajudar a interpretar erros, mas não substituem a
-implementação nem a explicação do aluno.
+e documentação oficial do React.
 
 **Fora do escopo:** React Router, Context, APIs, Axios, backend e bibliotecas
 de gerenciamento de estado. Não é necessário criar layout novo.

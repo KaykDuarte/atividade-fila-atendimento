@@ -1,4 +1,7 @@
 import "./App.css";
+import ChamadoList from "./components/ChamadoList";
+import { initialTickets} from "./data/chamados";
+
 
 // PONTO DE PARTIDA: os três cartões abaixo estão escritos manualmente.
 // O arquivo src/data/chamados.js contém quatro chamados.
@@ -18,33 +21,9 @@ export default function App() {
           <h2>Chamados</h2>
         </div>
         <div className="panel-content">
-          <div className="ticket-list">
-            <article className="ticket-card">
-              <div>
-                <h3>Wi-Fi não conecta</h3>
-                <p>Setor: Recepção</p>
-              </div>
-              <span className="badge badge-open">Aberto</span>
-            </article>
-
-            <article className="ticket-card">
-              <div>
-                <h3>Impressora sem papel</h3>
-                <p>Setor: Biblioteca</p>
-              </div>
-              <span className="badge badge-done">Resolvido</span>
-            </article>
-
-            <article className="ticket-card">
-              <div>
-                <h3>Acesso bloqueado</h3>
-                <p>Setor: Laboratório</p>
-              </div>
-              <span className="badge badge-open">Aberto</span>
-            </article>
+          <ChamadoList chamados={initialTickets} />
           </div>
-        </div>
-      </section>
-    </main>
+          </section>
+          </main>
   );
 }
