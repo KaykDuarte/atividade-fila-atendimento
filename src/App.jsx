@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import ChamadoForm from "./components/ChamadoForm";
 import ChamadoList from "./components/ChamadoList";
 import Panel from "./components/Panel";
 import { initialTickets } from "./data/chamados";
@@ -27,6 +28,17 @@ export default function App() {
     );
   }
 
+  function handleAddChamado({ title, sector }) {
+    const novoChamado = {
+      id: `chamado-${Date.now()}`,
+      title,
+      sector,
+      resolved: false,
+    };
+
+    setChamados((chamadosAtuais) => [...chamadosAtuais, novoChamado]);
+  }
+
   return (
     <main className="app">
       <header className="hero">
@@ -39,6 +51,10 @@ export default function App() {
         <p className="summary">
           {resolvedCount} de {chamados.length} chamados resolvidos
         </p>
+      </Panel>
+
+      <Panel title="Novo chamado">
+        <ChamadoForm onAdd={handleAddChamado} />
       </Panel>
 
       <Panel title="Chamados">
