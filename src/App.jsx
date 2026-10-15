@@ -1,16 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ChamadoForm from "./components/ChamadoForm";
 import ChamadoList from "./components/ChamadoList";
 import Panel from "./components/Panel";
 import { initialTickets } from "./data/chamados";
 
+const STORAGE_KEY = "iteam:fila-atendimento";
+
+function loadChamados() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+
+  if (saved === null) {
+    return initialTickets;
+  }
+
+  try {
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : initialTickets;
+  } catch {
+    return initialTickets;
+  }
+}
+
 export default function App() {
-  const [chamados, setChamados] = useState(initialTickets);
+  const [chamados, setChamados] = useState(loadChamados);
 
   const resolvedCount = chamados.filter(
     (chamado) => chamado.resolved,
   ).length;
+  const totalCount = chamados.length;
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(chamados));
+  }, [chamados]);
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = `${resolvedCount}/${totalCount} chamados resolvidos`;
+
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [resolvedCount, totalCount]);
 
   function handleToggleChamado(chamadoId) {
     setChamados((chamadosAtuais) =>
@@ -49,7 +80,7 @@ export default function App() {
 
       <Panel title="Resumo">
         <p className="summary">
-          {resolvedCount} de {chamados.length} chamados resolvidos
+          {resolvedCount} de {totalCount} chamados resolvidos
         </p>
       </Panel>
 
